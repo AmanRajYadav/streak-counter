@@ -33,6 +33,8 @@
 ### Sounds (place in `/public/assets/sounds/`)
 - `background-music.mp3` - Background music (looping)
 - `celebration.mp3` - Celebration sound for milestones
+- `increment.mp3` - Sound effect for streak increment (short, positive beep/chime)
+- `reset.mp3` - Sound effect for streak reset to zero (short, negative/sad tone)
 
 ## Notes
 - **NEW**: Animals change every 5 streaks instead of 10!
