@@ -1,107 +1,98 @@
-# 🎮 Streak Counter - Interactive Learning Game
+# 🎮 Streak Counter — Interactive Learning Game
 
-An engaging streak counter app designed for classroom learning environments. Students can increase their learning streak by giving correct answers, while interactive animations keep them motivated!
+A classroom streak counter for rapid-fire questioning. Put it on the projector, hold a
+presentation remote, and click forward for every correct answer. The number climbs, a new
+animal friend is revealed every 5, and a new world opens every 100 — all the way to 1000.
 
-## 🌟 Features
+Live: [amanrajyadav.github.io/streak-counter](https://amanrajyadav.github.io/streak-counter)
 
-### 🎯 Core Functionality
-- **Streak Tracking**: Track consecutive correct answers
-- **Interactive Animals**: 20 different animated animals (a-t) that change every 5 streaks
-- **Presentation Remote Support**: Works with Logitech, Kensington, and universal remotes
-- **Milestone Celebrations**: Fireworks and sounds every 5 streaks
+## How the climb works
 
-### 🎨 Visual Effects
-- **Dynamic Weather**: Rain when streak is 0, sunshine when streak > 0
-- **Interactive Fireflies**: 15 clickable fireflies that teleport on click
-- **Animated Backgrounds**: Purple gradients, floating particles, and dust motes
-- **Smooth Animations**: Talking Tom-style bouncing and glowing effects
+| Every… | What happens |
+| --- | --- |
+| 1 answer | Counter ticks up, chime rises in pitch through the block of five |
+| 5 answers | **New animal friend revealed** + fireworks + celebration sound |
+| 25 answers | Bigger celebration, deeper sound, more fireworks |
+| 100 answers | **New world unlocked** — the whole colour scheme changes |
+| 1000 answers | A ⭐ is banked and the journey starts over, counting on past 1000 |
 
-### 🔊 Audio Controls
-- **Background Music**: Toggle with volume control
-- **Sound Effects**: Celebration sounds with volume control
-- **Presentation Mode**: Visual mode optimized for presentations
+There are 20 animals and 10 worlds (Meadow → Ocean → Desert → Volcano → Glacier → Jungle →
+Sunset → Thunder → Aurora → Cosmos), so the run to 1000 never shows the same
+animal-in-that-world twice.
 
-### ⌨️ Input Support
-**Increment Streak:**
-- Right Arrow, Up Arrow, PageDown, Space
+Under the number: five dots showing how close the next friend is, and a thin bar showing
+progress to 1000. The best streak ever reached is remembered on that device and shown top-left;
+beating it lights up a **NEW RECORD** badge.
 
-**Reset Streak:**
-- Left Arrow, Down Arrow, PageUp, Backspace, Escape
+## Controls
 
-## 🚀 Live Demo
+| Action | Keys |
+| --- | --- |
+| Next (correct answer) | → ↓ PageDown Space Enter N — or click/tap anywhere |
+| Reset to 0 | ← ↑ PageUp Backspace Esc P |
+| Undo one (misfire) | Z − |
+| Fullscreen | F |
+| Clean view (hide all chrome) | M, or the on-screen button |
 
-Visit: [https://amanrajyadav.github.io/streak-counter](https://amanrajyadav.github.io/streak-counter)
+Every input goes through a single 90 ms gate, so one press is always exactly one point —
+whether it comes from a remote, a keyboard, a mouse or a phone tap. Held-down buttons and
+auto-repeat are ignored.
 
-## 🛠️ Development
+On phones and tablets a bottom bar appears with big **−**, **+** and **↻** buttons, and the
+settings collapse behind a ☰ menu.
 
-### Prerequisites
-- Node.js 16+
-- npm or yarn
+## Tuning it for your class
 
-### Installation
+Everything adjustable lives in [`src/config.js`](src/config.js):
+
+- `ANIMALS` — the reveal order. **Drop a new GIF into `public/assets/gifs/` and add its name
+  here; the app stretches to fit automatically.** With 40 animals the run to 1000 shows
+  40 distinct friends per world instead of 20.
+- `STREAK_PER_ANIMAL` — how many correct answers per reveal (default 5).
+- `WORLDS` — names, badges and colour palettes.
+- `SMALL_CHEERS` / `BIG_CHEERS` — the praise text.
+- `INPUT_COOLDOWN_MS` — raise it if a remote ever double-fires; lower it for faster rapid fire.
+
+## Assets
+
+```
+public/assets/
+  gifs/     sad.gif + one GIF per name in ANIMALS (200x200 works, square is best)
+  sounds/   background-music.mp3, celebration.mp3, increment.mp3, reset.mp3
+  favicon/  icons + PWA files
+```
+
+All 21 GIFs are preloaded in the background after the page settles, so a reveal never stalls
+on the projector.
+
+## Running it
+
 ```bash
-# Clone the repository
-git clone https://github.com/amanrajyadav/streak-counter.git
-cd streak-counter
-
-# Install dependencies
 npm install
-
-# Start development server
-npm run dev
+npm run dev        # http://localhost:3000
+npm run build      # production build into dist/
+npm run deploy     # build + publish dist/ to the gh-pages branch
 ```
 
-### Deployment
-```bash
-# Build and deploy to GitHub Pages
-npm run deploy
-```
+## Performance
 
-## 📁 Asset Structure
+If the classroom machine is old, open the menu and switch **Effects: Full** to **Lite** —
+that drops the fireflies and thins the rain and dust. The setting is remembered.
 
-### Required GIFs (`/public/assets/gifs/`)
-- `sad.gif` - Sad animal for streak 0
-- `a.gif` to `t.gif` - Happy animals for streaks 1-100
+## Remote compatibility
 
-### Optional Backgrounds (`/public/assets/backgrounds/`)
-- Fallback images (backgrounds are now animated)
+Tested with Logitech R400/R700/R800, Kensington remotes, generic clickers and PowerPoint
+presenters. Both modern `event.code` values and legacy `keyCode` values are handled.
 
-### Audio Files (`/public/assets/sounds/`)
-- `background-music.mp3` - Background music
-- `celebration.mp3` - Milestone celebration sound
+## Tech
 
-## 🎓 Educational Use
+React 18 + Vite, plain CSS animations, deployed to GitHub Pages. No tracking, no backend —
+the only thing stored is the best streak and the volume settings, in `localStorage`.
 
-Perfect for:
-- **Classroom Q&A sessions**
-- **Quiz competitions**
-- **Learning motivation**
-- **Interactive presentations**
-- **Student engagement**
+## License
 
-## 🔧 Technical Details
-
-- **Framework**: React 18 with Vite
-- **Styling**: Pure CSS with animations
-- **Deployment**: GitHub Pages
-- **Browser Support**: Modern browsers with presentation remote compatibility
-
-## 🎮 Presentation Remote Compatibility
-
-Tested and optimized for:
-- Logitech R400/R700/R800 series
-- Kensington presentation remotes
-- Universal presentation remotes
-- PowerPoint slide clickers
-
-## 📝 License
-
-MIT License - feel free to use in your classroom!
-
-## 🤝 Contributing
-
-Contributions welcome! Please feel free to submit pull requests or open issues.
+MIT — free to use in your classroom.
 
 ---
 
-Made with ❤️ for educators and students worldwide!
+Made with ❤️ for educators and students. Powered by Fluence.ac
